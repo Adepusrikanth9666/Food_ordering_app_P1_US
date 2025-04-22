@@ -1,0 +1,15 @@
+.Menu-container-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.menu-items {
+  background-color: rgba(231, 231, 221, 0.473);
+  padding: 30px;
+  margin: 20px;
+}
+
+.menu-items:hover {
+  background-color: rgba(221, 224, 226, 0.61);
+  cursor: pointer;
+}
