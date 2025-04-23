@@ -11,6 +11,7 @@ const Header = () => {
             src="https://i.pinimg.com/736x/59/28/ef/5928ef7cae44045ab92df313c6fc18bf.jpg"
             height={180}
             width={180}
+            alt="food_img"
           />
         </Link>
       </div>
