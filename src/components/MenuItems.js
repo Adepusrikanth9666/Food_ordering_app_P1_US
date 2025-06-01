@@ -1,69 +1,53 @@
 import React from "react";
 import Header from "./Header";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import CardActionArea from "@mui/material/CardActionArea";
-import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
 import "./styles/menuItems.css";
-import FoodItems from "../mock/foodItems.json";
+import foodItems from "../mock/foodItems.json";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/reducers/cartSlice";
+import { selectCartItem } from "../redux/selectors/cartSlice";
 
 const MenuItems = () => {
-  return (
-    <div className="Menu-continer">
-      <Header />
-      <div className="Menu-container-list">
-        {FoodItems.map((foodItem, index) => (
-          <>
-            <div className="menu-items" key={index}>
-              <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={foodItem.image}
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {foodItem.name}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Price : {foodItem.price}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                      rating : {foodItem.rating}
-                    </Typography>
-                    <Stack spacing={1}>
-                      <Rating
-                        name="half-rating-read"
-                        defaultValue={foodItem.rating}
-                        precision={foodItem.rating}
-                        readOnly
-                        size="large"
-                      />
-                    </Stack>
-                    <Typography gutterBottom variant="h5" component="div">
-                      deliveryTime:{foodItem.deliveryTime}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ color: "text.secondary" }}
-                    >
-                      {foodItem.description}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </div>
-          </>
-        ))}
-      </div>
+  const cartItems = useSelector(selectCartItem);
+  const dispatch = useDispatch();
+  const handleAddToCart = (item) => {
+    dispatch(addToCart(item));
+  };
 
-      <h1>MenuItems</h1>
-    </div>
+  console.log(cartItems, "cartItems");
+  return (
+    <>
+      <Header />
+      <div className="menu-container">
+        <h1 className="menu-heading">Explore Our Delicious Dishes 🍽️</h1>
+        <div className="menu-grid">
+          {foodItems.map((item) => (
+            <div key={item.id} className="menu-card">
+              <img src={item.image} alt={item.name} className="menu-image" />
+              <h2 className="menu-title">{item.name}</h2>
+              <p className="menu-description">{item.description}</p>
+              <div className="menu-info">
+                <span className="menu-price">₹{item.price}</span>
+                <span className="menu-rating">⭐ {item.rating}</span>
+              </div>
+              <div className="menu-actions">
+                <button
+                  onClick={() => handleAddToCart(item)}
+                  className="btn-cart"
+                >
+                  Add to Cart
+                </button>
+                <button
+                  // onClick={() => handleWishlist(item)}
+                  className="btn-wishlist"
+                >
+                  ❤️ Wishlist
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 
